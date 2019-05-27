@@ -1,0 +1,21 @@
+h1,
+h4 {
+    color: #ffffff;
+    text-align: center;
+    margin-top: 3em;
+    letter-spacing: 6px;
+    font-weight: bold;
+}
+
+#app {
+    height: 100%;
+    min-height: 100vh;
+    padding-top: 4rem;
+    background-image: url("/images/bball.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.container {
+    background: rgba(41, 26, 26, 0.9);
+}
