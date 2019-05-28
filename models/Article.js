@@ -2,18 +2,25 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const ArticleSchema = new Schema ({
+const ArticleSchema = new Schema({
     title: {
         type: String,
-        required: true
+        unique: true
     },
     link: {
         type: String,
-        required: true
+
+    },
+    date: {
+        type: Date
     },
     comment: {
         type: Schema.Types.ObjectId,
         ref: "Comment"
+    },
+    saved: {
+        type: Boolean,
+        default: false
     }
 })
 

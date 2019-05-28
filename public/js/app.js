@@ -1,29 +1,25 @@
-  
-// When you click the savenote button
-$(document).on("click", "#savenote", function() {
-  // Grab the id associated with the article from the submit button
-  var thisId = $(this).attr("data-id");
-
-  // Run a POST request to change the note, using what's entered in the inputs
-  $.ajax({
-    method: "POST",
-    url: "/articles/" + thisId,
-    data: {
-      // Value taken from title input
-      title: $("#titleinput").val(),
-      // Value taken from note textarea
-      body: $("#bodyinput").val()
-    }
-  })
-    // With that done
-    .then(function(data) {
-      // Log the response
-      console.log(data);
-      // Empty the notes section
-      $("#notes").empty();
+$(document).ready(function () {
+    //redirects to the saved page
+    $(".btn-outline-info").on("click", function () {
+        location.href = "http://localhost:3000/saved"
     });
+    //redirects to home page
+    $(".btn-outline-success").on("click", function () {
+        location.href = "http://localhost:3000"
+    });
+    //deletes ALL articles
+    $(".btn-outline-danger").on("click", deleteTask);
 
-  // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
-});
+    function deleteTask(event) {
+        event.stopPropagation();
+        $.ajax({
+            method: "Delete",
+            url: "/delete"
+        }).then
+        location.reload();
+    };
+    //scrape new articles
+    $(".btn-outline-warning").on("click", function () {
+        location.href = "http://localhost:3000/scrape"
+    });
+})

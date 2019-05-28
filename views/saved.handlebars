@@ -1,0 +1,24 @@
+<nav id="nav" class="navbar navbar-dark bg-dark">
+  <!-- Navbar content -->
+  <nav class="navbar-brand">
+    <button class="btn btn-outline-success" type="button">Home</button>
+    <button class="btn btn-outline-info" type="button">Saved Articles</button>
+    <button class="btn btn-outline-warning" type="button">Scrape NEW Articles!</button>
+  </nav>
+  <button class="btn btn-outline-danger" type="button">Clear all Articles</button>
+</nav>
+<section id="title">
+  <div class="container">
+    <h1>Saved Articles<img src="images/ball.jpg" height="35" width="35"></h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {{#if data}}
+    {{#each data}}
+    {{> stored}}
+    {{/each}}
+    {{else}}
+    <h1>No Articles Saved</h1>
+    {{/if}}

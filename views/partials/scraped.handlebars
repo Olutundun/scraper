@@ -1,0 +1,16 @@
+{{#if this.saved}}
+{{else}}
+<div class="card">
+    <div class="card-content">
+        <div class="media">
+            <div class="media-right">
+                <a class="btn btn-info" data-id={{this.id}}>Save Article</a>
+            </div>
+            <div class="media-content">
+                <p><a href={{this.link}} class="title is-4">{{this.title}}</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{{/if}}

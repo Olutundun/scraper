@@ -1,0 +1,65 @@
+<nav id="nav" class="navbar navbar-dark bg-dark">
+  <!-- Navbar content -->
+  <nav class="navbar-brand">
+    <button class="btn btn-outline-success" type="button">Home</button>
+    <button class="btn btn-outline-info" type="button">Saved Articles</button>
+    <button class="btn btn-outline-warning" type="button">Scrape NEW Articles!</button>
+  </nav>
+  <button class="btn btn-outline-danger" type="button">Clear all Articles</button>
+</nav>
+<section id="title">
+  <div class="container">
+    <h1>MONGO SCRAPER</h1>
+    <hr class="my-4">
+    <h4>NBA EDITION!<img src="images/ball.jpg" height="35" width="35"></h4>
+  </div>
+  <div class="col-1">
+  </div>
+  </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      {{#if data}}
+      {{#each data}}
+      {{> scraped}}
+      {{/each}}
+      {{else}}
+      <h1>No Articles Scraped</h1>
+      {{/if}}
+
+      <div class="modal fade" id="scrapeArticlesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title articlesScrapedTitle">Articles Scraped</h5>
+            </div>
+            <div class="modal-body articlesScrapedBody">
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="closeScrapeButton" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="articleSavedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title articleSavedTitle">Success!</h5>
+            </div>
+            <div class="modal-body articleSavedBody">
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="closeArticleButton"
+                data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>

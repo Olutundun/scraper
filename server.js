@@ -32,14 +32,14 @@ mongoose.connect("mongodb://localhost/nbadb", {
     useNewUrlParser: true
 });
 
-//route
+//routes
 require("./routes/htmlRoutes")(app);
 
 //server
 app.listen(PORT, function () {
     console.log("==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-    PORT,
-    PORT)
+        PORT,
+        PORT)
 });
 
 module.exports = app;
