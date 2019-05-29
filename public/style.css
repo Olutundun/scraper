@@ -1,34 +1,37 @@
 h1,
-h4, #rules{
-    color: #101010;
-    text-align: center;
-    margin-top: 1em;
-    letter-spacing: 6px;
-    font-weight: bold;
+h4,
+#rules {
+  color: #101010;
+  text-align: center;
+  margin-top: 1em;
+  letter-spacing: 6px;
+  font-weight: bold;
 }
+
 img {
-    animation: rotation 8s infinite linear;
+  animation: rotation 8s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
   }
-  
-  @keyframes rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(359deg);
-    }
+
+  to {
+    transform: rotate(359deg);
   }
+}
+
 #nav {
-    width: 100%;
+  width: 100%;
 }
 
 #title {
-    height: 100%;
-    min-height: 100vh;
-    padding-top: 2.7rem;
+  padding-top: 2.7rem;
+  padding-bottom: 2.7em;
 
 }
 
 .container {
-    border: 10px solid black;
+  border: 10px solid black;
 }
