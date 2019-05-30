@@ -31,11 +31,12 @@ module.exports = function (app) {
                     title: result.title,
                     link: result.link
                 }).then(function (dbArticle) {
-                    console.log(dbArticle.title + " already in db!")
+                   // console.log(dbArticle.title + " already in db!")
                 }).catch(function (err) {
                     //create a new article using the result object
                     db.Article.create(result).then(function (dbArticle) {
-                            //console.log(dbArticle)
+                        console.log(dbArticle);
+                            res.render("home")
                         })
                         .catch(function (err) {
                             console.log(err) //add user validation here 
@@ -43,18 +44,7 @@ module.exports = function (app) {
                 })
             })
             res.send("scrape complete")
-            res.end();
         });
-    });
-
-    // delete ALL route
-    app.delete("/delete", function (req, res) {
-        //grab all documents in the article collection
-        db.Article.deleteMany({}).then(function (dbArticle) {
-            console.log(dbArticle)
-        }).catch(function (err) {
-            res.json(err);
-        })
     });
 
     // Route for getting all saved articles
@@ -91,24 +81,31 @@ module.exports = function (app) {
                 res.json(err)
             })
     })
-
-
-    // Route for deleting/updating saved article
-    app.put("/delete/:id", function (req, res) {
-
-        db.Article
-            .findByIdAndUpdate({
-                _id: req.params.id
-            }, {
-                $set: {
-                    "saved": false
-                }
-            })
-            .then(function (dbArticle) {
-                res.json(dbArticle);
-            })
-            .catch(function (err) {
-                res.json(err);
-            });
+    // delete ALL route
+    app.delete("/delete", function (req, res) {
+        //grab all documents in the article collection
+        db.Article.deleteMany({}).then(function (dbArticle) {
+            console.log(dbArticle)
+        }).catch(function (err) {
+            res.json(err);
+        })
     });
+
+    // Route for removing/updating saved article
+    app.put("/delete/:id", function (req, res) {
+            db.Article.findByIdAndUpdate({
+                    _id: req.params.id
+                }, {
+                    saved: false
+                }
+                .then(function (dbArticle) {
+                })
+                .catch(function (err) {
+                    res.json(err);
+
+                })
+            )
+        }
+
+    )
 };

@@ -27,7 +27,8 @@ $(document).ready(function () {
             method: "GET",
             url: "/scrape"
         }).then(function (response) {
-            location.reload();
+            console.log(response)
+           // location.reload();
         })
     }
 
@@ -39,15 +40,31 @@ $(document).ready(function () {
         let savedArticle = {
             saved: saved
         };
-        console.log(id)
-        console.log(savedArticle);
+        //console.log(id)
+        //console.log(savedArticle);
         $.ajax("/saved" + id, {
             method: "PUT",
             saved: savedArticle
         }).then(function () {
-            console.log("successfully saved this article!")
+            //console.log("successfully saved this article!")
+            location.reload(); 
         })
     });
+    //remove ONE article  //NOT WORKING YETTTT
+    $(".btn-warning").on("click", removeArticle);
+    function removeArticle(event) {
+    event.stopPropagation();
+        let id = $(this).data("id");
+        console.log(id)
+        $.ajax("/saved" + id, {
+            method: "PUT",
+            URL: "/delete/:id"
+        }).then(function () {
+            console.log("successfully deleted this article!")
+        
+    });
+    }
+    //add a comment to each article
 
-
+    //delete comment 
 })

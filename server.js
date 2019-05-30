@@ -33,7 +33,7 @@ mongoose.connect("mongodb://localhost/nbadb", {
 });
 
 //routes
-require("./routes/htmlRoutes")(app);
+require("./routes/allRoutes")(app);
 
 //server
 app.listen(PORT, function () {
