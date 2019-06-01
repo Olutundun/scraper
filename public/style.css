@@ -1,3 +1,20 @@
+textarea,
+input {
+  display: block;
+  width: 100%;
+  background-color: #FCF5C7;
+}
+
+input {
+  height: 36px;
+  font-size: 20px;
+}
+
+textarea {
+  height: 200px;
+  font-size: 18px;
+}
+
 h1,
 h4,
 #rules {
@@ -29,9 +46,21 @@ img {
 #title {
   padding-top: 2.7rem;
   padding-bottom: 2.7em;
-
 }
 
 .container {
   border: 10px solid black;
+}
+
+.modal-header {
+  text-align: center;
+  background: black;
+  color: white;
+
+}
+
+.modal-title {
+  font-size: 2rem;
+  margin: 0 auto;
+
 }

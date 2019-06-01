@@ -7,7 +7,8 @@ $(document).ready(function () {
     $(".btn-outline-success").on("click", function () {
         location.href = "http://localhost:3000"
     });
-    //deletes ALL articles
+
+    /*deletes ALL articles
     $(".btn-outline-danger").on("click", deleteArticles);
 
     function deleteArticles(event) {
@@ -17,18 +18,19 @@ $(document).ready(function () {
             url: "/delete"
         }).then
         location.reload();
-    };
+    };*/
+
     //scrape new articles 
     $(".btn-outline-warning").on("click", scrapeArticle);
 
     function scrapeArticle(event) {
+
         event.stopPropagation();
         $.ajax({
             method: "GET",
             url: "/scrape"
         }).then(function (response) {
-            console.log(response)
-           // location.reload();
+            location.reload();
         })
     }
 
@@ -47,24 +49,70 @@ $(document).ready(function () {
             saved: savedArticle
         }).then(function () {
             //console.log("successfully saved this article!")
-            location.reload(); 
+            location.reload();
         })
     });
-    //remove ONE article  //NOT WORKING YETTTT
+
+    //remove ONE article 
     $(".btn-warning").on("click", removeArticle);
+
     function removeArticle(event) {
-    event.stopPropagation();
+        event.stopPropagation();
+
         let id = $(this).data("id");
         console.log(id)
-        $.ajax("/saved" + id, {
-            method: "PUT",
-            URL: "/delete/:id"
-        }).then(function () {
-            console.log("successfully deleted this article!")
-        
-    });
-    }
-    //add a comment to each article
+        $.ajax({
+            method: "DELETE",
+            url: "/delete/" + id
 
-    //delete comment 
+        }).then(function () {
+            // console.log("successfully deleted this article!")
+            location.reload()
+        });
+    }
+
+    //add a comment to each article
+    $(document).on("click", ".btn-success", function () {
+
+        $(".modal-body").empty();
+        $("#myModal").modal("show")
+        var thisId = $(this).attr("data-id");
+        $.ajax({
+                method: "GET",
+                url: "/" + thisId
+            })
+            .then(function (data) {
+                console.log(data);
+                $(".modal-title").html("<h6>" + data.title + "</h6>");
+                $(".modal-body").append("<input id='titleInput' name='title' placeholder='title...'>");
+                $(".modal-body").append("<textarea id='bodyInput' name='body' placeholder='comment...'></textarea>");
+                $(".modal-body").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+                // If there's a comment in the article
+                if (data.comment) {
+                    // Place the title of the comment in the title input
+                    $("#titleInput").val(data.comment.title);
+                    // Place the body of the comment in the body textarea
+                    $("#bodyInput").val(data.comment.body);
+                }
+            });
+    });
+
+    //When you click the savenote button
+    $(document).on("click", "#savenote", function () {
+        var thisId = $(this).attr("data-id");
+        $.ajax({
+                method: "POST",
+                url: "/" + thisId,
+                data: {
+                    title: $("#titleInput").val(),
+                    body: $("#bodyInput").val()
+                }
+            })
+            .then(function (data) {
+                console.log(data);
+            });
+        $("#titleInput").val("");
+        $("#bodyInput").val("");
+    });
+
 })

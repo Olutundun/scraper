@@ -31,11 +31,11 @@ module.exports = function (app) {
                     title: result.title,
                     link: result.link
                 }).then(function (dbArticle) {
-                   // console.log(dbArticle.title + " already in db!")
+                    // console.log(dbArticle.title + " already in db!")
                 }).catch(function (err) {
                     //create a new article using the result object
                     db.Article.create(result).then(function (dbArticle) {
-                        console.log(dbArticle);
+                            console.log(dbArticle);
                             res.render("home")
                         })
                         .catch(function (err) {
@@ -81,7 +81,7 @@ module.exports = function (app) {
                 res.json(err)
             })
     })
-    // delete ALL route
+    /* delete ALL route
     app.delete("/delete", function (req, res) {
         //grab all documents in the article collection
         db.Article.deleteMany({}).then(function (dbArticle) {
@@ -89,23 +89,73 @@ module.exports = function (app) {
         }).catch(function (err) {
             res.json(err);
         })
+    });*/
+
+    //delete saved articles
+    app.delete("/delete", function (req, res) {
+        //grab every doc in the article collection
+        db.Article.deleteOne({
+                saved: true
+            }).then(function (dbArticle) {
+                //send back to the client
+                res.render("saved", {
+                    data: dbArticle
+                })
+            })
+            .catch(function (err) {
+                return res.status(500).end();
+            });
+    })
+
+    app.delete("/delete/:id", function (req, res) {
+        db.Article.deleteOne({
+                _id: req.params.id
+            })
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                res.json(err);
+            });
     });
 
-    // Route for removing/updating saved article
-    app.put("/delete/:id", function (req, res) {
-            db.Article.findByIdAndUpdate({
+    // Route for grabbing a specific Article by id, populate it with it's comment
+    app.get("/:id", function (req, res) {
+        // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+        db.Article.findOne({
+                _id: req.params.id
+            })
+            // ..and populate all of the comments associated with it
+            .populate("comment")
+            .then(function (dbArticle) {
+
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+    //comment
+    app.post("/:id", function (req, res) {
+        // create a new comment and pass the req.body to the entry
+        db.Comment.create(req.body)
+            .then(function (dbComment) {
+                return db.Article.findOneAndUpdate({
                     _id: req.params.id
                 }, {
-                    saved: false
-                }
-                .then(function (dbArticle) {
-                })
-                .catch(function (err) {
-                    res.json(err);
+                    comment: dbComment._id
+                }, {
+                    new: true
+                });
+            })
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
 
-                })
-            )
-        }
-
-    )
 };
