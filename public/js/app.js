@@ -8,7 +8,7 @@ $(document).ready(function () {
         location.href = "http://localhost:3000"
     });
 
-    /*deletes ALL articles
+    //deletes ALL articles
     $(".btn-outline-danger").on("click", deleteArticles);
 
     function deleteArticles(event) {
@@ -17,8 +17,8 @@ $(document).ready(function () {
             method: "Delete",
             url: "/delete"
         }).then
-        location.reload();
-    };*/
+       // location.reload();
+    };
 
     //scrape new articles 
     $(".btn-outline-warning").on("click", scrapeArticle);

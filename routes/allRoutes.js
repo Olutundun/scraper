@@ -17,29 +17,38 @@ module.exports = function (app) {
     });
     //get route for scraping the site
     app.get("/scrape", function (req, res) {
-        axios.get("https://www.echojs.com/").then(function (response) {
+        axios.get("https://www.nytimes.com/section/sports/basketball").then(function (response) {
             //load the body into cheerio 
             const $ = cheerio.load(response.data);
 
-            $("article h2").each(function (i, element) {
+            $("div.story-meta").each(function (i, element) {
+
                 const result = {};
+
                 //add the text and href of every link and save them as properties of the result object
-                result.title = $(this).children("a").text();
-                result.link = $(this).children("a").attr("href");
+                result.title = $(this).children(".headline").text();
+                result.summary = $(this).children(".summary").text();
+
                 //prevent duplicate entries
                 db.Article.findOne({
                     title: result.title,
-                    link: result.link
+                    summary: result.summary,
                 }).then(function (dbArticle) {
-                    // console.log(dbArticle.title + " already in db!")
+                    //found one
+                    //found none
+                    if (dbArticle) {
+                        console.log(dbArticle.title + " already in db!")
+                    } else {
+                        //create new one
+                    }
                 }).catch(function (err) {
                     //create a new article using the result object
                     db.Article.create(result).then(function (dbArticle) {
                             console.log(dbArticle);
-                            res.render("home")
+                            //res.render("home")
                         })
                         .catch(function (err) {
-                            console.log(err) //add user validation here 
+                            console.log(err)
                         })
                 })
             })
@@ -81,7 +90,7 @@ module.exports = function (app) {
                 res.json(err)
             })
     })
-    /* delete ALL route
+    //delete ALL route
     app.delete("/delete", function (req, res) {
         //grab all documents in the article collection
         db.Article.deleteMany({}).then(function (dbArticle) {
@@ -89,7 +98,7 @@ module.exports = function (app) {
         }).catch(function (err) {
             res.json(err);
         })
-    });*/
+    });
 
     //delete saved articles
     app.delete("/delete", function (req, res) {
