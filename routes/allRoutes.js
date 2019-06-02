@@ -24,7 +24,6 @@ module.exports = function (app) {
             $("div.story-meta").each(function (i, element) {
 
                 const result = {};
-
                 //add the text and href of every link and save them as properties of the result object
                 result.title = $(this).children(".headline").text();
                 result.summary = $(this).children(".summary").text();
@@ -32,24 +31,20 @@ module.exports = function (app) {
                 //prevent duplicate entries
                 db.Article.findOne({
                     title: result.title,
-                    summary: result.summary,
+                    summary: result.summary
                 }).then(function (dbArticle) {
-                    //found one
-                    //found none
                     if (dbArticle) {
                         console.log(dbArticle.title + " already in db!")
                     } else {
                         //create new one
+                        db.Article.create(result).then(function (dbArticle) {
+                            // console.log(dbArticle);
+                            //res.render("home")
+                        })
                     }
                 }).catch(function (err) {
                     //create a new article using the result object
-                    db.Article.create(result).then(function (dbArticle) {
-                            console.log(dbArticle);
-                            //res.render("home")
-                        })
-                        .catch(function (err) {
-                            console.log(err)
-                        })
+                    console.log(err)
                 })
             })
             res.send("scrape complete")

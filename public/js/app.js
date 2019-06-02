@@ -30,7 +30,7 @@ $(document).ready(function () {
             method: "GET",
             url: "/scrape"
         }).then(function (response) {
-            location.reload();
+            //location.reload();
         })
     }
 

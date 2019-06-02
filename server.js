@@ -5,9 +5,6 @@ const exphbs = require("express-handlebars");
 //initialize express
 const app = express();
 
-//require all models
-const db = require("./models");
-
 //port
 const PORT = process.env.PORT || 3000;
 
