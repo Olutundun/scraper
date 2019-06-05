@@ -8,7 +8,6 @@ const app = express();
 //port
 const PORT = process.env.PORT || 3000;
 
-//app.use(logger("dev"));
 //handlebars
 app.engine("handlebars", exphbs({
     defaultLayout: "main"

@@ -21,24 +21,27 @@ module.exports = function (app) {
             //load the body into cheerio 
             const $ = cheerio.load(response.data);
 
-            $("div.story-meta").each(function (i, element) {
+            $("div.story-body").each(function (i, element) {
 
                 const result = {};
+            
                 //add the text and href of every link and save them as properties of the result object
-                result.title = $(this).children(".headline").text();
-                result.summary = $(this).children(".summary").text();
-
+                result.title = $(this).children(".story-link").children(".story-meta").children("h2").text();
+                result.summary = $(this).children(".story-link").children(".story-meta").text();
+                result.link = $(this).children("a").attr("href");
                 //prevent duplicate entries
                 db.Article.findOne({
                     title: result.title,
-                    summary: result.summary
+                    summary: result.summary,
+                    link: result.link
+
                 }).then(function (dbArticle) {
                     if (dbArticle) {
                         console.log(dbArticle.title + " already in db!")
                     } else {
                         //create new one
                         db.Article.create(result).then(function (dbArticle) {
-                            // console.log(dbArticle);
+                            console.log(dbArticle);
                             //res.render("home")
                         })
                     }
