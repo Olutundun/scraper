@@ -5,6 +5,12 @@ const exphbs = require("express-handlebars");
 //initialize express
 const app = express();
 
+
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nbadb";
+
+mongoose.connect(MONGODB_URI);
+
 //port
 const PORT = process.env.PORT || 3000;
 
@@ -23,10 +29,7 @@ app.use(express.json());
 //make public a static folder
 app.use(express.static("public"));
 
-//connect to the Mongo DB
-mongoose.connect("mongodb://localhost/nbadb", {
-    useNewUrlParser: true
-});
+
 
 //routes
 require("./routes/allRoutes")(app);
