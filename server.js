@@ -6,7 +6,7 @@ const exphbs = require("express-handlebars");
 const app = express();
 
 
-// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+// If deployed, use the deployed database. Otherwise use the localhost 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nbadb";
 
 mongoose.connect(MONGODB_URI);

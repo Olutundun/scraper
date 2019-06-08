@@ -1,11 +1,11 @@
 $(document).ready(function () {
     //redirects to the saved page
     $(".btn-outline-info").on("click", function () {
-        location.href = "http://localhost:3000/saved"
+        location.href = "/saved"
     });
     //redirects to home page
     $(".btn-outline-success").on("click", function () {
-        location.href = "http://localhost:3000"
+        location.href = "/"
     });
 
     //deletes ALL articles
