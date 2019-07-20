@@ -53,7 +53,7 @@ $(document).ready(function () {
         })
     });
 
-    //remove ONE article 
+    /*remove ONE article 
     $(".btn-warning").on("click", removeArticle);
 
     function removeArticle(event) {
@@ -69,7 +69,7 @@ $(document).ready(function () {
             // console.log("successfully deleted this article!")
             location.reload()
         });
-    }
+    }*/
 
     //add a comment to each article
     $(document).on("click", ".btn-success", function () {
@@ -86,7 +86,7 @@ $(document).ready(function () {
                 $(".modal-title").html("<h6>" + data.title + "</h6>");
                 $(".modal-body").append("<input id='titleInput' name='title' placeholder='title...'>");
                 $(".modal-body").append("<textarea id='bodyInput' name='body' placeholder='comment...'></textarea>");
-                $(".modal-body").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+                $(".modal-body").append("<button data-id='" + data._id + "' id='savenote'>Save Comment</button>");
                 // If there's a comment in the article
                 if (data.comment) {
                     // Place the title of the comment in the title input

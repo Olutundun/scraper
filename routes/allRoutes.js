@@ -15,6 +15,7 @@ module.exports = function (app) {
             res.json(err)
         });
     });
+
     //get route for scraping the site
     app.get("/scrape", function (req, res) {
         axios.get("https://www.nytimes.com/section/sports/basketball").then(function (response) {
@@ -88,44 +89,7 @@ module.exports = function (app) {
                 res.json(err)
             })
     })
-    //delete ALL route
-    app.delete("/delete", function (req, res) {
-        //grab all documents in the article collection
-        db.Article.deleteMany({}).then(function (dbArticle) {
-            console.log(dbArticle)
-        }).catch(function (err) {
-            res.json(err);
-        })
-    });
 
-    //delete saved articles
-    app.delete("/delete", function (req, res) {
-        //grab every doc in the article collection
-        db.Article.deleteOne({
-                saved: true
-            }).then(function (dbArticle) {
-                //send back to the client
-                res.render("saved", {
-                    data: dbArticle
-                })
-            })
-            .catch(function (err) {
-                return res.status(500).end();
-            });
-    })
-
-    app.delete("/delete/:id", function (req, res) {
-        db.Article.deleteOne({
-                _id: req.params.id
-            })
-            .then(function (dbArticle) {
-                res.json(dbArticle);
-            })
-            .catch(function (err) {
-                // If an error occurred, send it to the client
-                res.json(err);
-            });
-    });
 
     // Route for grabbing a specific Article by id, populate it with it's comment
     app.get("/:id", function (req, res) {
